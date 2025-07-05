@@ -93,30 +93,133 @@ describe('Arithmetic', function () {
         });
     });
 
-// TODO: Challenge #1
- 
-
-    describe('Multiplication', function () {
-        it('multiplies two positive integers', function (done) {
-            request.get('/arithmetic?operation=multiply&operand1=21&operand2=2')
+    // Additional tests for Subtraction
+    describe('Subtraction', function () {
+        it('subtracts two positive integers', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=42&operand2=21')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 21 });
+                    done();
+                });
+        });
+        it('subtracts a larger number from a smaller one', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=21&operand2=42')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: -21 });
+                    done();
+                });
+        });
+        it('subtracts zero', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=42&operand2=0')
                 .expect(200)
                 .end(function (err, res) {
                     expect(res.body).to.eql({ result: 42 });
                     done();
                 });
         });
-        it('multiplies a positive integer with zero', function (done) {
-            request.get('/arithmetic?operation=multiply&operand1=21&operand2=0')
+        it('subtracts negative numbers', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=-21&operand2=-21')
                 .expect(200)
                 .end(function (err, res) {
                     expect(res.body).to.eql({ result: 0 });
                     done();
                 });
         });
-        it('multiplies a positive integer and negative integer', function (done) {
-            request.get('/arithmetic?operation=multiply&operand1=21&operand2=-2')
+        it('subtracts floating point numbers', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=5.5&operand2=2.2')
                 .expect(200)
                 .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 3.3 });
+                    done();
+                });
+        });
+        it('subtracts with exponential notation', function (done) {
+            request.get('/arithmetic?operation=subtract&operand1=1e2&operand2=2e1')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 80 });
+                    done();
+                });
+        });
+    });
+
+    // Additional validation tests
+    describe('Validation - Edge Cases', function () {
+        it('rejects missing operand2', function (done) {
+            request.get('/arithmetic?operation=add&operand1=21')
+                .expect(400)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ error: "Invalid operand2: undefined" });
+                    done();
+                });
+        });
+        it('rejects empty operand1', function (done) {
+            request.get('/arithmetic?operation=add&operand1=&operand2=21')
+                .expect(400)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ error: "Invalid operand1: " });
+                    done();
+                });
+        });
+        it('rejects empty operand2', function (done) {
+            request.get('/arithmetic?operation=add&operand1=21&operand2=')
+                .expect(400)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ error: "Invalid operand2: " });
+                    done();
+                });
+        });
+        it('rejects non-numeric operand2', function (done) {
+            request.get('/arithmetic?operation=add&operand1=21&operand2=abc')
+                .expect(400)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ error: "Invalid operand2: abc" });
+                    done();
+                });
+        });
+    });
+
+    // Additional multiplication edge case
+    describe('Multiplication - Edge Cases', function () {
+        it('multiplies zero with zero', function (done) {
+            request.get('/arithmetic?operation=multiply&operand1=0&operand2=0')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 0 });
+                    done();
+                });
+        });
+        it('multiplies with exponential notation', function (done) {
+            request.get('/arithmetic?operation=multiply&operand1=1e2&operand2=2e1')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 2000 });
+                    done();
+                });
+        });
+    });
+
+    // Division edge cases
+    describe('Division - Edge Cases', function () {
+        it('divides negative zero by a number', function (done) {
+            request.get('/arithmetic?operation=divide&operand1=-0&operand2=2')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: 0 });
+                    done();
+                });
+        });
+        it('divides a number by negative zero', function (done) {
+            request.get('/arithmetic?operation=divide&operand1=2&operand2=-0')
+                .expect(200)
+                .end(function (err, res) {
+                    expect(res.body).to.eql({ result: null });
+                    done();
+                });
+        });
+    });
                     expect(res.body).to.eql({ result: -42 });
                     done();
                 });
