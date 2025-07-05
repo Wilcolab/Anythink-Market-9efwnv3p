@@ -15,4 +15,5 @@ services:
       - "8001:8001"
     volumes:
       - ./js-server:/app
+      - /app/node_modules
     command: npm run dev
