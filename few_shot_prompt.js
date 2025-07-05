@@ -1,16 +1,12 @@
 function toCamelCase(str) {
     return str
-        .split(/[\s_-]+/)
-        .map((word, idx) => {
-            if (idx === 0) {
-                return word.toLowerCase();
-            }
-            return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
-        })
-        .join('');
+        .toLowerCase()
+        .replace(/[_\-\s]+(.)?/g, (_, chr) => chr ? chr.toUpperCase() : '')
+        .replace(/^[A-Z]/, chr => chr.toLowerCase());
 }
 
 // Example usage:
-// console.log(toCamelCase("hello world")); // "helloWorld"
-// console.log(toCamelCase("hello_world")); // "helloWorld"
-// console.log(toCamelCase("hello-world")); // "helloWorld"
+console.log(toCamelCase('first name'));      // firstName
+console.log(toCamelCase('user_id'));         // userId
+console.log(toCamelCase('SCREEN_NAME'));     // screenName
+console.log(toCamelCase('mobile-number'));   // mobileNumber
