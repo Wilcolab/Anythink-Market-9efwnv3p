@@ -1,0 +1,24 @@
+{
+  "name": "js-express-server",
+  "version": "1.0.0",
+  "description": "A simple Express.js server",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "nodemon src/server.js",
+    "dev": "nodemon src/server.js",
+    "prod": "node src/server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "keywords": [
+    "express",
+    "nodejs",
+    "server"
+  ],
+  "author": "",
+  "license": "MIT"
+}
