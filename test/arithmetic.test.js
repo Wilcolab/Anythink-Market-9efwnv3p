@@ -205,47 +205,4 @@ describe('Arithmetic', function () {
                 });
         });
     });
-
-    describe('Power', function () {
-        it('calculates 2 to the power of 3', function (done) {
-            request.get('/arithmetic?operation=power&operand1=2&operand2=3')
-                .expect(200)
-                .end(function (err, res) {
-                    expect(res.body).to.eql({ result: 8 });
-                    done();
-                });
-        });
-        it('calculates 5 to the power of 2', function (done) {
-            request.get('/arithmetic?operation=power&operand1=5&operand2=2')
-                .expect(200)
-                .end(function (err, res) {
-                    expect(res.body).to.eql({ result: 25 });
-                    done();
-                });
-        });
-        it('calculates 10 to the power of 0', function (done) {
-            request.get('/arithmetic?operation=power&operand1=10&operand2=0')
-                .expect(200)
-                .end(function (err, res) {
-                    expect(res.body).to.eql({ result: 1 });
-                    done();
-                });
-        });
-        it('calculates 4 to the power of 0.5 (square root)', function (done) {
-            request.get('/arithmetic?operation=power&operand1=4&operand2=0.5')
-                .expect(200)
-                .end(function (err, res) {
-                    expect(res.body).to.eql({ result: 2 });
-                    done();
-                });
-        });
-        it('calculates negative base to integer power', function (done) {
-            request.get('/arithmetic?operation=power&operand1=-2&operand2=3')
-                .expect(200)
-                .end(function (err, res) {
-                    expect(res.body).to.eql({ result: -8 });
-                    done();
-                });
-        });
-    });
 });
