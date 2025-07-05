@@ -1,6 +1,6 @@
 # JS Express Server
 
-A simple Express.js server running on port 8001.
+A simple Express.js server running on **port 8001**.
 
 ## Getting Started
 
@@ -39,7 +39,7 @@ yarn start
 npm run prod
 ```
 
-The server will start on [http://localhost:8001](http://localhost:8001).
+The Node.js server will start and listen on [http://localhost:8001](http://localhost:8001).
 
 ### Docker
 
@@ -56,6 +56,8 @@ docker build -t js-express-server .
 ```bash
 docker run -p 8001:8001 js-express-server
 ```
+
+The server inside the container will also run on port 8001.
 
 ### SSH Access
 
